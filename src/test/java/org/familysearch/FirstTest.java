@@ -22,34 +22,24 @@ public class FirstTest {
         FileParser vpnLogPassReader = new FileParser();
         String[] vpnLogPass = vpnLogPassReader.getLogPass(".\\src\\test\\resources\\vpn_login.txt");
         String[] familysearchLogPass = vpnLogPassReader.getLogPass(".\\src\\test\\resources\\familysearch_login.txt");
-        System.out.println(vpnLogPass[0]);
-        System.out.println(vpnLogPass[1]);
-        System.out.println(familysearchLogPass[0]);
-        System.out.println(familysearchLogPass[1]);
 
-        HashMap<String, Object> operaPrefs = new HashMap<String, Object>();
-        operaPrefs.put("profile.default_content_settings.popups", 0);
-        operaPrefs.put("download.default_directory", "D:\\1");
-        OperaOptions options = new OperaOptions();
-        options.setBinary("C:\\Program Files (x86)\\Opera\\43.0.2442.806\\opera.exe");
-        File file = new File("C:\\Users\\RED ANGEL\\AppData\\Roaming\\Opera Software\\Opera Stable\\Extensions\\ebpielhlnnpkiddeeacoephkilopgblc\\surfeasy-proxy.crx");
-        options.addExtensions(file);
-        options.setExperimentalOption("prefs", operaPrefs);
-        System.setProperty("webdriver.opera.driver", "D:\\PROGRAM\\libs\\operadriver_win64\\operadriver.exe");
-        WebDriver driver = new OperaDriver(options);
-        WebElement link = ((OperaDriver) driver).findElementByCssSelector(".summary .link");
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("arguments[0].scrollIntoView()", link);
+        WebDriver driver = OperaDriverPreparation.runOperaDriver();
         Actions actions = new Actions(driver);
-        actions.moveToElement(link).click().perform();
+        VPNAuth.surfEasyAuth(driver, vpnLogPass);
 
-        WebElement usernameVPN = ((OperaDriver) driver).findElementByCssSelector(".form-element");
-        WebElement submitVPN = ((OperaDriver) driver).findElementByCssSelector(".summary");
-        usernameVPN.click();
-        actions.moveToElement(usernameVPN).sendKeys(vpnLogPass[0]).build().perform();
-        actions.sendKeys(Keys.TAB).build().perform();
-        actions.sendKeys(vpnLogPass[1]).build().perform();
-        actions.moveToElement(submitVPN).click().build().perform();
+
+//        WebElement link = ((OperaDriver) driver).findElementByCssSelector(".summary .link");
+//        JavascriptExecutor jse = (JavascriptExecutor)driver;
+//        jse.executeScript("arguments[0].scrollIntoView()", link);
+//        Actions actions = new Actions(driver);
+//        actions.moveToElement(link).click().perform();
+//        WebElement usernameVPN = ((OperaDriver) driver).findElementByCssSelector(".form-element");
+//        WebElement submitVPN = ((OperaDriver) driver).findElementByCssSelector(".summary");
+//        usernameVPN.click();
+//        actions.moveToElement(usernameVPN).sendKeys(vpnLogPass[0]).build().perform();
+//        actions.sendKeys(Keys.TAB).build().perform();
+//        actions.sendKeys(vpnLogPass[1]).build().perform();
+//        actions.moveToElement(submitVPN).click().build().perform();
 
 //        try {
 //            TimeUnit.SECONDS.sleep(5);
