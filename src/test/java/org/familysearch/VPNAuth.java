@@ -8,7 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
 
 public class VPNAuth {
-    public static void surfEasyAuth(WebDriver driver, String[] vpnLogPass) {
+    public static void surfEasyAuth(WebDriver driver, String login, String password) {
         WebElement link = ((OperaDriver) driver).findElementByCssSelector(".summary .link");
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("arguments[0].scrollIntoView()", link);
@@ -17,9 +17,9 @@ public class VPNAuth {
         WebElement usernameVPN = ((OperaDriver) driver).findElementByCssSelector(".form-element");
         WebElement submitVPN = ((OperaDriver) driver).findElementByCssSelector(".summary");
         usernameVPN.click();
-        actions.moveToElement(usernameVPN).sendKeys(vpnLogPass[0]).build().perform();
+        actions.moveToElement(usernameVPN).sendKeys(login).build().perform();
         actions.sendKeys(Keys.TAB).build().perform();
-        actions.sendKeys(vpnLogPass[1]).build().perform();
+        actions.sendKeys(password).build().perform();
         actions.moveToElement(submitVPN).click().build().perform();
     }
 }

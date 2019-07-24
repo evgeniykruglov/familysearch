@@ -6,7 +6,10 @@ import java.util.*;
 
 public class FileParser {
     //String path;
-    public String[] getLogPass (String path) {
+    public String login;
+    public String password;
+
+    public void readLogPass(String path) {
         File file = new File(path);
         String[] dataFromFile = new String[2];
         try {
@@ -29,13 +32,14 @@ public class FileParser {
             System.out.println("File not fount " + ex);
             ex.printStackTrace();
         }
-//        if (type == "login") {
-//            String outputValue = dataFromFile[0];
-//            return outputValue;
-//        } else if (type == "password") {
-//            String outputValue = dataFromFile[1];
-//            return outputValue;
-//        }
-        return dataFromFile;
+        this.login = dataFromFile [0];
+        this.password = dataFromFile [1];
+        //return dataFromFile;
+    }
+    public String getLogin() {
+        return this.login;
+    }
+    public String getPassword() {
+        return this.password;
     }
 }
