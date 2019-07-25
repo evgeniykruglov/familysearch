@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -32,24 +33,20 @@ public class Familysearch {
 
     public void pageDiscoverer(WebDriver driver, String url) {
         driver.get(url);
-        try {
-            TimeUnit.SECONDS.sleep(20);
-        }
-        catch (InterruptedException ie) {
-            System.out.println("Error of loading");
-        }
+        waiter(5);
+
     }
     public void pageSetter (WebDriver driver, Actions actions, int startPage) {
-        waiter(5);
         WebElement currentPage = ((OperaDriver) driver).findElementByName("currentTileNumber");
-        System.out.println(currentPage.getText() + " " + currentPage.getTagName() + " " + currentPage.getLocation());
-        //WebElement currentPage = ((OperaDriver) driver).findElementByCssSelector(".openSDPagerInputText");
-        actions.moveToElement(currentPage).click().build().perform();
-        actions.moveToElement(currentPage).doubleClick().build().perform();
-        actions.moveToElement(currentPage).sendKeys(Keys.chord(Keys.CONTROL, "a")).build().perform();
-        actions.moveToElement(currentPage).sendKeys(Keys.DELETE).build().perform();
-        actions.moveToElement(currentPage).sendKeys(Integer.toString(startPage)).build().perform();
-        actions.moveToElement(currentPage).sendKeys(Keys.ENTER).build().perform();
+        Action settingOfPage = actions
+            .moveToElement(currentPage)
+            .click()
+            .doubleClick()
+            .sendKeys(Keys.chord(Keys.CONTROL, "a"))
+            .sendKeys(Keys.DELETE)
+            .sendKeys(Integer.toString(startPage))
+            .sendKeys(Keys.ENTER).build();
+        settingOfPage.perform();
         waiter(5);
     }
 
