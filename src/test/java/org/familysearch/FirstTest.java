@@ -13,15 +13,11 @@ public class FirstTest {
     private int startPage;
     private int endPage;
 
-    @Test
-    public void test() {
-        GUIrunner();
-    }
-
-    public void GUIrunner() {
+    //@Test
+    public static void main(String Args[]) {
         GUI app = new GUI();
         app.setVisible(true);
-        app.handler();
+        //app.handler();
     }
 
     public void variablesSetter(int firstValue, int secondValue) {
@@ -30,8 +26,7 @@ public class FirstTest {
     }
 
     public void firstTest() {
-
-        System.out.println(startPage);
+        //System.out.println(startPage);
         InputParametersValidation.inputParametersValidator(startPage, endPage);
 
         FileParser vpnParser = new FileParser();
