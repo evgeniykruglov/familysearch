@@ -5,22 +5,24 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class FirstTest {
 
-    private String metricBookUrl = "https://familysearch.org/ark:/61903/3:1:3QSQ-G97B-Q4NN";
+    private String metricBookUrl;
     private String pathToVpnTxt = ".\\src\\test\\resources\\vpn_login.txt";
     private String pathToFamilysearchTxt = ".\\src\\test\\resources\\familysearch_login.txt";
     private static String pathToBooksTxt = ".\\src\\test\\resources\\books.csv";
     private int startPage;
     private int endPage;
+    private static HashMap hashMapOfTitlesAndLinks;
 
     //@Test
     public static void main(String Args[]) {
 
         URLConfigParser urlcp = new URLConfigParser();
-        Map<String ,String> hashMapOfTitlesAndLinks = urlcp.getListOfBooks(pathToBooksTxt);
-        GUI app = new GUI((HashMap)hashMapOfTitlesAndLinks);
+        hashMapOfTitlesAndLinks = (HashMap)urlcp.getListOfBooks(pathToBooksTxt);
+        GUI app = new GUI(hashMapOfTitlesAndLinks);
         app.setVisible(true);
     }
 
@@ -30,8 +32,7 @@ public class FirstTest {
     }
 
     public void firstTest() {
-        //System.out.println(startPage);
-        //InputParametersValidation.inputParametersValidator(startPage, endPage);
+        metricBookUrl = MetricBookUrlConfigurator.metricBookUrlSetter(hashMapOfTitlesAndLinks);
 
         LoginConfigParser vpnParser = new LoginConfigParser();
         vpnParser.readLogPass(pathToVpnTxt);

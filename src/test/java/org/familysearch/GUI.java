@@ -46,6 +46,7 @@ public class GUI extends JFrame{
 
     class ButtonEventListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
+            MetricBookUrlConfigurator.metricBookTitleGetter((String) bookSelectorCombo.getSelectedItem());
             int value1 = inputGetter(startPageInput);
             int value2 = inputGetter(endPageInput);
             if (inputChecker(value1, value2) != false) {
