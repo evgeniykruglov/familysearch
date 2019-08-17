@@ -2,6 +2,9 @@ package org.familysearch;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.*;
 
 public class GUI extends JFrame{
@@ -10,21 +13,35 @@ public class GUI extends JFrame{
     private JLabel startPageLabel = new JLabel("Начальная страница");
     private JTextField endPageInput = new JTextField("", 5);
     private JLabel endPageLabel = new JLabel("Конечная страница");
+    private JLabel bookSelectorLabel = new JLabel("Выберите метрическую книгу");
+    private JComboBox bookSelectorCombo;
+    private HashMap titlesAndLinks;
 
-    public GUI () {
+    public GUI(HashMap inputItems) {
         super("Simple example");
-        this.setBounds(100, 100, 250, 100);
+        this.titlesAndLinks = inputItems;
+        bookSelectorCombo = new JComboBox(getItemsForBookSelectorCombo());
+        this.setBounds(200, 200, 600, 180);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            Container container = this.getContentPane();
-            container.setLayout(new GridLayout(3, 2, 2, 2));
-            container.add(startPageLabel);
-            container.add(startPageInput);
-            container.add(endPageLabel);
-            container.add(endPageInput);
-            ButtonGroup group = new ButtonGroup();
-            button.addActionListener(new ButtonEventListener());
-            container.add(button);
+        Container container = this.getContentPane();
+        container.setLayout(new GridLayout(4, 2, 2, 2));
+        container.add(bookSelectorLabel);
+        container.add(bookSelectorCombo);
+        container.add(startPageLabel);
+        container.add(startPageInput);
+        container.add(endPageLabel);
+        container.add(endPageInput);
+        ButtonGroup group = new ButtonGroup();
+        button.addActionListener(new ButtonEventListener());
+        container.add(button);
+    }
+
+    private String[] getItemsForBookSelectorCombo() {
+        Set<String> titlesOfBooks = titlesAndLinks.keySet();
+        String[] itemsInBookSelectorCombo = titlesOfBooks.toArray(new String[titlesOfBooks.size()]);
+
+        return itemsInBookSelectorCombo;
     }
 
     class ButtonEventListener implements ActionListener {
@@ -44,7 +61,7 @@ public class GUI extends JFrame{
         }
     }
 
-    public int inputGetter (JTextField field) {
+    private int inputGetter (JTextField field) {
         int output = 0;
         try {
             output = Integer.parseInt(field.getText());
@@ -54,7 +71,7 @@ public class GUI extends JFrame{
         return output;
     }
 
-    public Boolean inputChecker(int value1, int value2) {
+    private Boolean inputChecker(int value1, int value2) {
         Boolean decision = false;
             try {
                 if (value1 > 0 && value2 > 0) {

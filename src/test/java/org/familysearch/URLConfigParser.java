@@ -1,23 +1,27 @@
 package org.familysearch;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class URLConfigParser {
     private String[] output;
     private File file;
+    private String[] titleAndLink;
+    private Map<String, String> titlesAndLinks = new HashMap<String, String>();
 
-    public String[] listOfBooks(String path) {
+    public Map<String, String> getListOfBooks(String path) {
         file = new File(path);
 
         try {
             FileReader filereader = new FileReader(path);
             BufferedReader bufferedreader = new BufferedReader(filereader);
             String line = bufferedreader.readLine();
-            //output = new String[line];
             while (line != null) {
                 //Try to parse integer from the String line
                 try {
-                    System.out.println(line);
+                    titleAndLink = line.split(";");
+                    titlesAndLinks.put(titleAndLink[0], titleAndLink[1]);
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
                     System.exit(1);
@@ -31,7 +35,6 @@ public class URLConfigParser {
             System.out.println("File input error occured!");
             ioexception.printStackTrace();
         }
-        return output;
+        return titlesAndLinks;
     }
-
 }

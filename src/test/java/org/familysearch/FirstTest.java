@@ -3,6 +3,9 @@ package org.familysearch;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FirstTest {
 
     private String metricBookUrl = "https://familysearch.org/ark:/61903/3:1:3QSQ-G97B-Q4NN";
@@ -14,10 +17,10 @@ public class FirstTest {
 
     //@Test
     public static void main(String Args[]) {
-        URLConfigParser urlcp = new URLConfigParser();
-        urlcp.listOfBooks(pathToBooksTxt);
 
-        GUI app = new GUI();
+        URLConfigParser urlcp = new URLConfigParser();
+        Map<String ,String> hashMapOfTitlesAndLinks = urlcp.getListOfBooks(pathToBooksTxt);
+        GUI app = new GUI((HashMap)hashMapOfTitlesAndLinks);
         app.setVisible(true);
     }
 
