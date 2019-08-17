@@ -13,10 +13,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Familysearch {
     public void authorizator(WebDriver driver, String login, String password) {
+        //waiter(10);
         String path = "https://familysearch.org/auth/familysearch/login";
         driver.get(path);
         try {
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.SECONDS.sleep(20);
             WebElement usernameElement = driver.findElement(By.id("userName"));
             WebElement passwordElement = driver.findElement(By.id("password"));
             WebElement submit = driver.findElement(By.id("login"));
@@ -25,6 +26,7 @@ public class Familysearch {
             passwordElement.click();
             passwordElement.sendKeys(password);
             submit.click();
+            waiter(5);
         }
         catch (InterruptedException ie) {
             System.out.println("Error of loading");

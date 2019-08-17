@@ -29,33 +29,54 @@ public class GUI extends JFrame{
 
     class ButtonEventListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
-            handler();
-            String message = "";
-            message += "Downloading is starting\n";
-            message += "Pages from " + startPageInput.getText() + " to " + endPageInput.getText() + "\n will be downloaded";
-            JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
+            int value1 = inputGetter(startPageInput);
+            int value2 = inputGetter(endPageInput);
+            if (inputChecker(value1, value2) != false) {
+                String message = "";
+                message += "Downloading is starting\n";
+                message += "Pages from " + startPageInput.getText() + " to " + endPageInput.getText() + "\n will be downloaded";
+                JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
+                handler(value1, value2);
+            } else {
+                System.out.println("Wrong input data. The app will be stopped");
+                System.exit(0);
+            }
         }
     }
 
-    public void handler() {
-        FirstTest testObject = new FirstTest();
+    public int inputGetter (JTextField field) {
+        int output = 0;
         try {
-            int value1 = Integer.parseInt(startPageInput.getText());
-            int value2 = Integer.parseInt(endPageInput.getText());
+            output = Integer.parseInt(field.getText());
+        } catch (Exception ex) {
+            System.out.println("Wrong type of input data: " + field.getUIClassID());
+        }
+        return output;
+    }
+
+    public Boolean inputChecker(int value1, int value2) {
+        Boolean decision = false;
             try {
-                if (value2 > value1 || value2 >= 0 ||  value1 >= 0) {
-                    testObject.variablesSetter(value1, value2);
+                if (value1 > 0 && value2 > 0) {
+                    if (value2 > value1) {
+                        decision = true;
+                    }
                 }
             } catch (Exception ex) {
                 System.out.println("Wrong input values");
             }
-        } catch (Exception ex) {
-            System.out.println("Wrong type of input data");
-        }
-        try {
-            testObject.firstTest();
-        } catch (Exception ex) {
-            System.out.println("General error");
-        }
+        return decision;
+    }
+
+    public void handler(int value1, int value2) {
+        FirstTest testObject = new FirstTest();
+        testObject.variablesSetter(value1, value2);
+        System.out.println(value1 + " " + value2);
+        testObject.firstTest();
+//        try {
+//            testObject.firstTest();
+//        } catch (Exception ex) {
+//            System.out.println("General error");
+//        }
     }
 }

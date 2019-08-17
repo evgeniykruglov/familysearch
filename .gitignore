@@ -2,3 +2,4 @@
 *.iml
 src/test/resources/vpn_login.txt
 src/test/resources/familysearch_login.txt
+src/target/

@@ -4,8 +4,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class FileParser {
-    //String path;
+public class LoginConfigParser {
     public String login;
     public String password;
 
@@ -34,8 +33,8 @@ public class FileParser {
         }
         this.login = dataFromFile [0];
         this.password = dataFromFile [1];
-        //return dataFromFile;
     }
+
     public String getLogin() {
         return this.login;
     }
