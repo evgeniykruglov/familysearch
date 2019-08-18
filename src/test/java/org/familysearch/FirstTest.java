@@ -3,6 +3,7 @@ package org.familysearch;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,6 @@ public class FirstTest {
 
     //@Test
     public static void main(String Args[]) {
-
         URLConfigParser urlcp = new URLConfigParser();
         hashMapOfTitlesAndLinks = (HashMap)urlcp.getListOfBooks(pathToBooksTxt);
         GUI app = new GUI(hashMapOfTitlesAndLinks);

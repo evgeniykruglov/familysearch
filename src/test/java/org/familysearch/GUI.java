@@ -89,12 +89,11 @@ public class GUI extends JFrame{
     public void handler(int value1, int value2) {
         FirstTest testObject = new FirstTest();
         testObject.variablesSetter(value1, value2);
-        System.out.println(value1 + " " + value2);
-        testObject.firstTest();
-//        try {
-//            testObject.firstTest();
-//        } catch (Exception ex) {
-//            System.out.println("General error");
-//        }
+        //testObject.firstTest();
+        try {
+            testObject.firstTest();
+        } catch (Exception ex) {
+            System.out.println("General error");
+        }
     }
 }

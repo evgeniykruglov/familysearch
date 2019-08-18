@@ -35,7 +35,7 @@ public class Familysearch {
 
     public void pageDiscoverer(WebDriver driver, String url) {
         driver.get(url);
-        waiter(5);
+        waiter(8);
 
     }
     public void pageSetter (WebDriver driver, Actions actions, int startPage) {
@@ -71,10 +71,15 @@ public class Familysearch {
         Integer currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
         Integer lastPageNumber = Integer.parseInt(lastPage.getText().split(" ")[1]);
         //File downloadedFile = new File("C");
-
-        for (int i = currentPageNumber; (i <= endPage && i != lastPageNumber); i++ ) {
-
+        System.out.println("Total pages ="+lastPageNumber);
+        for (int i = currentPageNumber; (i <= lastPageNumber+1 && i <= endPage+1) ; i++ ) {
+            currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
+            System.out.println("i=" + i + ";lastPage="+lastPageNumber + "endPage=" + endPage + "currentPage=" + currentPageNumber );
+            System.out.println((i <= lastPageNumber+1 || i <= endPage+1));
+            System.out.println("----");
             actions.moveToElement(downloadButton).click().build().perform();
+            waiter(5);
+            FilesWorker.fileFinderAndRenamer(currentPageNumber.toString());
             actions.moveToElement(nextButton).click().build().perform();
             waiter(10);
         }
