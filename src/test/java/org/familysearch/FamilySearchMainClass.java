@@ -3,12 +3,9 @@ package org.familysearch;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
-public class FirstTest {
+public class FamilySearchMainClass {
 
     private String metricBookUrl;
     private String pathToVpnTxt = ".\\src\\test\\resources\\vpn_login.txt";
@@ -26,12 +23,12 @@ public class FirstTest {
         app.setVisible(true);
     }
 
-    public void variablesSetter(int firstValue, int secondValue) {
+    FamilySearchMainClass(int firstValue, int secondValue) {
         this.startPage = firstValue;
         this.endPage = secondValue;
     }
 
-    public void firstTest() {
+    public void familySearchDownloader() {
         metricBookUrl = MetricBookUrlConfigurator.metricBookUrlSetter(hashMapOfTitlesAndLinks);
 
         LoginConfigParser vpnParser = new LoginConfigParser();
@@ -44,10 +41,13 @@ public class FirstTest {
         Actions actions = new Actions(driver);
         VPNAuth.surfEasyAuth(driver, vpnParser.getLogin(), vpnParser.getPassword());
 
-        Familysearch downloader = new Familysearch();
-        downloader.authorizator(driver, familysearchParser.login, familysearchParser.password);
-        downloader.pageDiscoverer(driver, metricBookUrl);
-        downloader.pageSetter(driver, actions, startPage);
-        downloader.photoLoader(driver, actions, endPage);
+        FamilySearchWorkClass downloader = new FamilySearchWorkClass(driver);
+        downloader.authorizator(familysearchParser.login, familysearchParser.password);
+        downloader.pageDiscoverer(metricBookUrl);
+        do {
+            downloader.waiter(2);
+            downloader.pageSetter(actions, startPage);
+        } while (downloader.getCurrentPageNumber() != startPage);
+        downloader.photoLoader(actions, endPage);
     }
 }

@@ -11,8 +11,14 @@ import org.openqa.selenium.interactions.Actions;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-public class Familysearch {
-    public void authorizator(WebDriver driver, String login, String password) {
+public class FamilySearchWorkClass {
+    WebDriver driver;
+
+    FamilySearchWorkClass(WebDriver webDriver) {
+        this.driver = webDriver;
+    }
+
+    public void authorizator(String login, String password) {
         //waiter(10);
         String path = "https://familysearch.org/auth/familysearch/login";
         driver.get(path);
@@ -33,12 +39,12 @@ public class Familysearch {
         }
     }
 
-    public void pageDiscoverer(WebDriver driver, String url) {
+    public void pageDiscoverer(String url) {
         driver.get(url);
         waiter(8);
 
     }
-    public void pageSetter (WebDriver driver, Actions actions, int startPage) {
+    public void pageSetter (Actions actions, int startPage) {
         WebElement currentPage = ((OperaDriver) driver).findElementByName("currentTileNumber");
         Action settingOfPage = actions
             .moveToElement(currentPage)
@@ -48,6 +54,7 @@ public class Familysearch {
             .sendKeys(Keys.DELETE)
             .sendKeys(Integer.toString(startPage))
             .sendKeys(Keys.ENTER).build();
+        waiter(1);
         settingOfPage.perform();
         waiter(5);
     }
@@ -61,7 +68,7 @@ public class Familysearch {
         }
     }
 
-    public void photoLoader(WebDriver driver, Actions actions, int endPage) {
+    public void photoLoader( Actions actions, int endPage) {
         WebElement downloadButton = ((OperaDriver) driver).findElementById("saveLi");
         WebElement nextButton = ((OperaDriver) driver).findElementByCssSelector(".next");
         //WebElement currentPage = ((OperaDriver) driver).findElementByCssSelector(".openSDPagerInputText");
@@ -72,9 +79,9 @@ public class Familysearch {
         Integer lastPageNumber = Integer.parseInt(lastPage.getText().split(" ")[1]);
         //File downloadedFile = new File("C");
         System.out.println("Total pages ="+lastPageNumber);
-        for (int i = currentPageNumber; (i <= lastPageNumber+1 && i <= endPage+1) ; i++ ) {
+        for (int i = currentPageNumber; (i > lastPageNumber || i >= endPage) ; i++ ) {
             currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
-            System.out.println("i=" + i + ";lastPage="+lastPageNumber + "endPage=" + endPage + "currentPage=" + currentPageNumber );
+            System.out.println("i=" + i + ";lastPage="+lastPageNumber + ";endPage=" + endPage + ";currentPage=" + currentPageNumber );
             System.out.println((i <= lastPageNumber+1 || i <= endPage+1));
             System.out.println("----");
             actions.moveToElement(downloadButton).click().build().perform();
@@ -83,5 +90,11 @@ public class Familysearch {
             actions.moveToElement(nextButton).click().build().perform();
             waiter(10);
         }
+    }
+
+    public int getCurrentPageNumber() {
+        WebElement currentPage = ((OperaDriver) driver).findElementByName("currentTileNumber");
+        Integer currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
+        return currentPageNumber;
     }
 }

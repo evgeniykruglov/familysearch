@@ -3,7 +3,6 @@ package org.familysearch;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import javax.swing.*;
 
@@ -86,12 +85,10 @@ public class GUI extends JFrame{
         return decision;
     }
 
-    public void handler(int value1, int value2) {
-        FirstTest testObject = new FirstTest();
-        testObject.variablesSetter(value1, value2);
-        //testObject.firstTest();
+    private void handler(int value1, int value2) {
+        FamilySearchMainClass testObject = new FamilySearchMainClass(value1, value2);
         try {
-            testObject.firstTest();
+            testObject.familySearchDownloader();
         } catch (Exception ex) {
             System.out.println("General error");
         }
