@@ -49,5 +49,7 @@ public class FamilySearchMainClass {
             downloader.pageSetter(actions, startPage);
         } while (downloader.getCurrentPageNumber() != startPage);
         downloader.photoLoader(actions, endPage);
+        System.exit(0);
     }
+
 }

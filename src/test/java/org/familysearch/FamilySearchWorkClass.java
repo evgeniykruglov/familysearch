@@ -77,15 +77,11 @@ public class FamilySearchWorkClass {
 
         Integer currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
         Integer lastPageNumber = Integer.parseInt(lastPage.getText().split(" ")[1]);
-        //File downloadedFile = new File("C");
-        System.out.println("Total pages ="+lastPageNumber);
-        for (int i = currentPageNumber; (i > lastPageNumber || i >= endPage) ; i++ ) {
-            currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
-            System.out.println("i=" + i + ";lastPage="+lastPageNumber + ";endPage=" + endPage + ";currentPage=" + currentPageNumber );
-            System.out.println((i <= lastPageNumber+1 || i <= endPage+1));
-            System.out.println("----");
+
+        for (int i = currentPageNumber; ((i <= lastPageNumber) && (i <= endPage)) ; i++ ) {
             actions.moveToElement(downloadButton).click().build().perform();
             waiter(5);
+            currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
             FilesWorker.fileFinderAndRenamer(currentPageNumber.toString());
             actions.moveToElement(nextButton).click().build().perform();
             waiter(10);
@@ -97,4 +93,5 @@ public class FamilySearchWorkClass {
         Integer currentPageNumber = Integer.parseInt(currentPage.getAttribute("value"));
         return currentPageNumber;
     }
+
 }

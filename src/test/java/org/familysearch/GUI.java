@@ -56,7 +56,7 @@ public class GUI extends JFrame{
                 handler(value1, value2);
             } else {
                 System.out.println("Wrong input data. The app will be stopped");
-                System.exit(0);
+                System.exit(1);
             }
         }
     }
